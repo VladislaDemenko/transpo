@@ -1,7 +1,8 @@
-package java.com.transpolink.service;
+package com.transpolink.service;
 
-import java.com.transpolink.dto.CalculatorRequest;
-import java.com.transpolink.dto.ConsultationRequest;
+import com.transpolink.dto.CalculatorRequest;
+import com.transpolink.dto.ConsultationRequest;
+import com.transpolink.dto.DirectRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -50,11 +51,11 @@ public class EmailService {
             context.setVariable("isConsultation", false);
 
             String html = templateEngine.process("email-template", context);
-            sendEmail("📦 Новая заявка на расчёт стоимости", html);
+            sendEmail("Новая заявка на расчёт стоимости", html);
 
-            log.info("✅ Заявка из калькулятора отправлена на почту");
+            log.info("Заявка из калькулятора отправлена на почту");
         } catch (Exception e) {
-            log.error("❌ Ошибка при отправке заявки из калькулятора", e);
+            log.error("Ошибка при отправке заявки из калькулятора", e);
             throw new RuntimeException("Не удалось отправить заявку", e);
         }
     }
@@ -80,6 +81,33 @@ public class EmailService {
         } catch (Exception e) {
             log.error("❌ Ошибка при отправке заявки на консультацию", e);
             throw new RuntimeException("Не удалось отправить заявку", e);
+        }
+    }
+
+    /**
+     * Отправка прямого запроса
+     */
+    public void sendDirectRequest(DirectRequest request) {
+        try {
+            Context context = new Context();
+            context.setVariable("type", "✉️ Прямой запрос с контактов");
+            context.setVariable("fullName", request.getFullName());
+            context.setVariable("email", request.getEmail());
+            context.setVariable("organization", request.getOrganization());
+            context.setVariable("serviceType", request.getServiceType());
+            context.setVariable("message", request.getMessage());
+            context.setVariable("time", LocalDateTime.now().format(FORMATTER));
+            context.setVariable("isDirect", true);
+            context.setVariable("isCalculator", false);
+            context.setVariable("isConsultation", false);
+
+            String html = templateEngine.process("email-template", context);
+            sendEmail("✉️ Новый прямой запрос с сайта", html);
+
+            log.info("✅ Прямой запрос отправлен на почту");
+        } catch (Exception e) {
+            log.error("❌ Ошибка при отправке прямого запроса", e);
+            throw new RuntimeException("Не удалось отправить запрос", e);
         }
     }
 

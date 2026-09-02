@@ -1,4 +1,4 @@
-package java.com.transpolink.controller;
+package com.transpolink.controller;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;

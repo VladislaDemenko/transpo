@@ -1,4 +1,4 @@
-package java.com.transpolink;
+package com.transpolink;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

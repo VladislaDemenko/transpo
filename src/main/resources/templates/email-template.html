@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Заявка с сайта</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f3f6;
+            padding: 20px;
+            margin: 0;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 8px;
+            padding: 30px;
+            border-left: 4px solid #bb0014;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .header {
+            border-bottom: 2px solid #bb0014;
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+        .header h1 {
+            color: #bb0014;
+            margin: 0;
+            font-size: 24px;
+        }
+        .header p {
+            color: #75777e;
+            margin: 5px 0 0;
+            font-size: 14px;
+        }
+        .badge {
+            background: #bb0014;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-size: 13px;
+            display: inline-block;
+        }
+        .field {
+            margin: 10px 0;
+            padding: 12px;
+            background: #f8f8f8;
+            border-radius: 4px;
+            border-left: 3px solid #bb0014;
+        }
+        .field strong {
+            display: inline-block;
+            min-width: 120px;
+            color: #444;
+        }
+        .field span {
+            color: #1b1b1e;
+            font-weight: 500;
+        }
+        .field .value {
+            font-weight: 600;
+            color: #bb0014;
+        }
+        .footer {
+            margin-top: 25px;
+            padding-top: 15px;
+            border-top: 1px solid #ddd;
+            font-size: 13px;
+            color: #75777e;
+            text-align: center;
+        }
+        .footer a {
+            color: #bb0014;
+            text-decoration: none;
+        }
+        .footer a:hover {
+            text-decoration: underline;
+        }
+        .divider {
+            border-top: 1px dashed #ddd;
+            margin: 15px 0;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1>🚚 ТК «Трансполинк»</h1>
+        <p>
+            <span class="badge" th:text="${type}">Заявка</span>
+            <span style="margin-left: 12px; color: #999;" th:text="${time}">время</span>
+        </p>
+    </div>
+
+    <!-- Данные из калькулятора -->
+    <div th:if="${isCalculator}">
+        <div class="field">
+            <strong>📍 Откуда:</strong>
+            <span th:text="${from}">Москва</span>
+        </div>
+        <div class="field">
+            <strong>📍 Куда:</strong>
+            <span th:text="${to}">Санкт-Петербург</span>
+        </div>
+        <div class="field">
+            <strong>⚖️ Вес:</strong>
+            <span class="value" th:text="${weight} + ' кг'">200 кг</span>
+        </div>
+        <div class="field">
+            <strong>📦 Объём:</strong>
+            <span class="value" th:text="${volume} + ' м³'">5 м³</span>
+        </div>
+        <div class="divider"></div>
+    </div>
+
+    <!-- Данные из консультации -->
+    <div th:if="${isConsultation}">
+        <div class="field">
+            <strong>📧 Email:</strong>
+            <span th:text="${email}">email@mail.ru</span>
+        </div>
+        <div class="divider"></div>
+    </div>
+
+    <!-- Данные из прямого запроса -->
+    <div th:if="${isDirect}">
+        <div class="field">
+            <strong>👤 ФИО:</strong>
+            <span th:text="${fullName}">Иван Иванов</span>
+        </div>
+        <div class="field">
+            <strong>📧 Email:</strong>
+            <span th:text="${email}">email@mail.ru</span>
+        </div>
+        <div class="field" th:if="${organization}">
+            <strong>🏢 Организация:</strong>
+            <span th:text="${organization}">ООО Ромашка</span>
+        </div>
+        <div class="field">
+            <strong>📋 Тип услуги:</strong>
+            <span th:text="${serviceType}">Автомобильные перевозки</span>
+        </div>
+        <div class="field">
+            <strong>📝 Сообщение:</strong>
+            <span th:text="${message}">Описание груза</span>
+        </div>
+        <div class="divider"></div>
+    </div>
+
+    <!-- Общие данные -->
+    <div class="field">
+        <strong>👤 Клиент:</strong>
+        <span th:text="${clientName}">Иван Иванов</span>
+    </div>
+    <div class="field">
+        <strong>📞 Телефон:</strong>
+        <span class="value" th:text="${phone}">+7 903 470-02-22</span>
+    </div>
+
+    <div class="footer">
+        Заявка с сайта <a href="https://transpolink.ru">transpolink.ru</a>
+        <br>
+        <a href="mailto:logist@transpolink.ru">logist@transpolink.ru</a>
+    </div>
+</div>
+</body>
+</html>
